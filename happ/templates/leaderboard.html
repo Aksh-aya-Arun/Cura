@@ -1,0 +1,91 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="{% static 'assets/css/leaderboard.css' %}">
+</head>
+<body>
+    <div class="lead">
+        <div class="container">
+            <div class="header">
+                <h1>Leaderboard</h1>
+                <div class="xp-score">XP 200</div>
+            </div>
+
+            <!-- Top leaderboard section -->
+            <div class="top-leaderboard">
+                <div class="leader-card first">
+                    <p>James</p>
+                    <img src="{% static 'assets/images/1st-prize.png' %}" class="medal" alt="1st Place">
+                    <div class="avatar">
+                        <img src="{% static 'assets/images/leaderboard3.png' %}" alt="Profile Picture">
+                    </div>
+                </div>
+
+                <div class="leader-card second selected">
+                    <p>Sally</p>
+                    <img src="{% static 'assets/images/2nd-place.png' %}" class="medal" alt="2nd Place">
+                    <div class="avatar">
+                        <img src="{% static 'assets/images/leaderboard2.png' %}" alt="Profile Picture">
+                    </div>
+                </div>
+
+                <div class="leader-card third">
+                    <p>Boyle</p>
+                    <img src="{% static 'assets/images/3rd-place.png' %}" class="medal" alt="3rd Place">
+                    <div class="avatar">
+                        <img src="{% static 'assets/images/leaderboard1.png' %}" alt="Profile Picture">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lower leaderboard -->
+            <div class="list-leaderboard">
+                <div class="leader-card">
+                    <p class="leader-name">Juliana</p>
+                    <p class="rank">4th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">Natalie</p>
+                    <p class="rank">5th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">John</p>
+                    <p class="rank">6th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">Nirmala</p>
+                    <p class="rank">7th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">Adharv</p>
+                    <p class="rank">8th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">Qi Lin</p>
+                    <p class="rank">9th</p>
+                </div>
+                <div class="leader-card">
+                    <p class="leader-name">Juliana</p>
+                    <p class="rank">10th</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="{% url 'famil' %}"><img src="{% static 'assets/images/navbar/modules.png' %}"></a>
+        <a href="{% url 'leaderboard' %}"><img src="{% static 'assets/images/navbar/graph-active.png' %}"></a>
+        <a href="{% url 'notifications' %}"><img src="{% static 'assets/images/navbar/bell.png' %}"></a>
+        <a href="{% url 'settings' %}"><img src="{% static 'assets/images/navbar/settings.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

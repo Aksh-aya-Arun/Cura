@@ -1,0 +1,131 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+/* Settings Container */
+.settings-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding-bottom: 50px; /* Reduced bottom padding */
+    background-color: #ffffff;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #3D2174;
+}
+/* 
+header h1 {
+    
+} */
+
+/* Settings List */
+.settings-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.settings-list .left {
+    display: flex;
+    align-items: center;
+}
+
+.settings-list a {
+    text-decoration: none;
+    color: #3D2174;
+    font-size: 18px;
+    margin-left: 10px; /* Slightly reduced spacing */
+}
+
+/* Icons */
+.icon {
+    width: 32px; /* Reduced size */
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.user-icon::before {
+    content: "👤";
+}
+
+.notification-icon::before {
+    content: "🔔";
+}
+
+.appearance-icon::before {
+    content: "👁";
+}
+
+.privacy-icon::before {
+    content: "🛡";
+}
+
+.sound-icon::before {
+    content: "🔊";
+}
+
+.language-icon::before {
+    content: "🌐";
+}
+
+/* Right Arrow */
+.right-arrow {
+    font-size: 1.2rem;
+    color: #3D2174;
+    margin-left: auto;
+}
+
+/* Bottom Navigation - No Changes */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #e0e0e0;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #3D2174;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 45px;
+}
+
+.bottom-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav a:hover {
+    opacity: 0.8;
+}

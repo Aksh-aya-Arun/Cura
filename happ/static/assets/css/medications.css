@@ -1,0 +1,269 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #3D2174;
+    overflow-x: hidden;
+}
+
+.container {
+    padding: 20px;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-card {
+    background-color: #7DFFDF;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 90%; /* Ensure width matches medicine cards */
+    max-width: 350px; /* Match max-width of medicine cards */
+    margin: 10px auto; /* Ensure centered alignment */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-sizing: border-box; /* Ensure padding doesn't affect size */
+}
+
+/* Ensure the parent container also aligns properly */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures everything inside is centered */
+    width: 100%;
+}
+
+.title-card h1 {
+    font-size: 20px; /* Adjust font size to fit within the card */
+    margin: 0; /* Remove extra margin */
+    flex-grow: 1; /* Ensure it takes up full width */
+}
+
+.title-card img {
+    width: 40px; /* Adjust icon size */
+    height: 40px;
+    margin-left: 10px; /* Ensure spacing is even */
+}
+
+/* Menu icon */
+.menu-icon {
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+    padding-right: 10px;
+}
+
+/* Header Image */
+header img {
+    width: 50px;
+    height: 50px;
+}
+
+/* Date Selector */
+.date-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.date-selector button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.date {
+    background: #7DFFDF;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #3D2174;
+}
+
+/* Medicine List */
+.medicine-list {
+    padding: 15px;
+}
+
+/* Medicine Card */
+.medicine-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ensures it doesn't overflow */
+    max-width: 350px; 
+    margin: 10px auto;
+}
+
+/* Medicine Card Image */
+.medicine-card img {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+/* Medicine Info */
+.medicine-info {
+    flex-grow: 1;
+}
+
+/* Forward Button */
+.forward-btn {
+    background: #7DFFDF;
+    color: #3D2174;
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ffffff;
+    z-index: 10;
+}
+
+/* Bottom Navigation Links */
+.bottom-nav a {
+    color: #3D2174;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 45px;
+}
+
+/* Bottom Navigation Icons */
+.bottom-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav a:hover {
+    opacity: 0.8;
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+
+/* Show Toast */
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+
+/* Reminder Card */
+.reminder {
+    width: 80%;
+    max-width: 350px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin: 20px auto;
+}
+
+/* Reminder Text */
+.reminder p {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bell Icon */
+.bell-icon {
+    font-size: 22px;
+    color: #FFA500;
+    margin-right: 8px;
+}
+
+/* Reminder Buttons */
+.reminder-buttons {
+    display: flex;
+}
+
+/* Yes Button */
+.yes-btn {
+    flex: 1;
+    background: #A4E57A;
+    border: none;
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* No Button */
+.no-btn {
+    flex: 1;
+    background: #FF6B6B;
+    border: none;
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Ensure Reminder is Inside Container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Back Button */
+.back-button {
+    text-decoration: none;
+    font-size: 24px;
+    color: #3D2174;
+    cursor: pointer;
+    position: absolute;
+    left: 15px; /* Moves it further left */
+    top: 5px; /* Adjust vertical positioning */
+}

@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical History</title>
+    <link rel="stylesheet" href="{% static 'assets/css/nomedical.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="back-arrow">&#8592;</div>
+        <div class="title">Medical History</div>
+    </div>
+    
+    <!-- Sticker Section -->
+    <div class="sticker-container">
+        <img src="{% static 'assets/images/nomedical.png' %}" alt="Profile picture">
+    </div>
+
+    <!-- Empty State Message -->
+    <p class="message">You don't have any records.</p>
+    <p class="sub-message">Click the plus button to add</p>
+
+    <!-- Floating Action Button -->
+    <button class="fab">+</button>
+    
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

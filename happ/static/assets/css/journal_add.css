@@ -1,0 +1,272 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #FFFFFF; /* White Background */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #7DFFDF; /* Primary Color */
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+    text-decoration: none;
+    font-size: 18px;
+    color: #063438; /* Deep Green */
+    font-weight: bold;
+}
+
+.title-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.title-card h1 {
+    font-size: 18px;
+    color: #063438; /* Dark Green for Contrast */
+    font-weight: bold;
+}
+
+.title-card img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Journal Entries Section */
+.journal-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+}
+
+/* Journal Entry Cards */
+.entry {
+    background: #FFFFFF; /* White */
+    padding: 18px;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.entry:hover {
+    transform: scale(1.02);
+}
+
+.entry h3 {
+    font-size: 16px;
+    color: #063438; /* Dark Green for Headers */
+    font-weight: bold;
+}
+
+.entry p {
+    font-size: 14px;
+    color: #333333; /* Dark Gray for Readability */
+    margin-top: 4px;
+}
+
+/* Floating Add Button */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #7DFFD4; /* Aqua Green */
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    color: #063438; /* Dark Green Icon */
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* MODAL Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #FFFFFF; /* White */
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button */
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Labels & Input Fields */
+label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #063438; /* Dark Green */
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0; /* Light Gray Border */
+    font-size: 16px;
+    outline: none;
+}
+
+/* Save Button */
+.save-btn {
+    background: #7DFFDF; /* Mint Green */
+    color: #063438; /* Dark Green */
+    border: none;
+    padding: 12px;
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* No Records Section */
+.no-records {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.no-records-img {
+    width: 200px;
+    height: auto;
+    opacity: 0.8;
+}
+
+.no-records-text {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #063438; /* Dark Green */
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+.appointments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Tile Size */
+.tile {
+    background-color: #ffffff;        
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.tile h3 {
+    font-size: 1.2rem;
+    color: #3D2174;
+    margin-bottom: 5px;
+}
+
+.tile p {
+    font-size: 1.2rem;
+    color: #3D2174;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #7DFFDF;
+    color:#3D2174;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.fab:hover {
+    background-color: #37b897;
+    transform: scale(1.1);
+}
+
+.fab:active {
+    transform: scale(0.95);
+}

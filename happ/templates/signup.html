@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/signup.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+</head>
+<body>
+    <div class="signup-page">
+        <h2>Hi There,</h2>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form class="signup-form" id="signupForm" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" class="input-field" required>
+            <input type="email" name="email" placeholder="Email" class="input-field" required>
+            <div class="password-container">
+                <input type="password" name="password" id="loginPassword" placeholder="Password" class="input-field" required autocomplete="current-password">
+                <span class="toggle-password" onclick="togglePassword('loginPassword')">
+                    <img id="eyeIcon" src="{% static 'assets/images/eye.png' %}" alt="toggle-password" style="width: 20px; cursor: pointer;">
+                </span>
+            </div>
+            <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+
+        <p class="login-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+    <script>
+        function togglePassword(fieldId) {
+            let passwordField = document.getElementById(fieldId);
+            let eyeIcon = document.getElementById("eyeIcon");
+    
+            if (passwordField) {
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                    eyeIcon.src = "{% static 'assets/images/visible.png' %}"; // Change to open eye icon
+                } else {
+                    passwordField.type = "password";
+                    eyeIcon.src = "{% static 'assets/images/eye.png' %}"; // Change to closed eye icon
+                }
+            }
+        }
+    </script>
+</body>
+</html>

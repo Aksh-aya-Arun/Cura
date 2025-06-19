@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Notifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/notifications.css' %}">
+</head>
+<body>
+    <div class="notifications-page">
+        <h2>Notifications</h2>
+
+        <div class="reminders-section">
+            <div class="section-title">Your Reminders</div>
+            <div class="reminder-card">
+                <div class="reminder-info">
+                    <span class="dot purple-dot"></span>
+                    <span class="reminder-title"><strong>Steven!</strong></span>
+                </div>
+                <span class="reminder-text">Walk a kilometer today!</span>
+            </div>
+        </div>
+
+        <div class="dependents-section">
+            <div class="section-title">My Dependents</div>
+
+            <div class="dependent-card">
+                <div class="dependent-info">
+                    <span class="dot yellow-dot"></span>
+                    <span class="dependent-name"><strong>Father</strong></span>
+                </div>
+                <div class="dependent-timings">
+                    <div>Last Taken <span class="time-green">900</span></div>
+                    <div>Coming up <span class="time-orange">1800</span></div>
+                </div>
+            </div>
+
+            <div class="dependent-card">
+                <div class="dependent-info">
+                    <span class="dot blue-dot"></span>
+                    <span class="dependent-name"><strong>Mother</strong></span>
+                </div>
+                <div class="dependent-timings">
+                    <div>Take medications</div>
+                </div>
+            </div>
+
+            <div class="dependent-card">
+                <div class="dependent-info">
+                    <span class="dot pink-dot"></span>
+                    <span class="dependent-name"><strong>Steven Jr</strong></span>
+                </div>
+                <div class="dependent-timings">
+                    <div>Exercise</div>
+                    <div>Sleep</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="{% url 'famil'%}"><img src="{% static 'assets\images\navbar\modules.png' %}"></a>
+        <a href="{% url 'leaderboard'%}"><img src="{% static 'assets\images\navbar\graph.png' %}"></a>
+        <a href="{%url 'notifications' %}"><img src="{% static 'assets\images\navbar\bell-active.png' %}"></a>
+        <a href="{% url 'settings'%}"><img src="{% static 'assets\images\navbar\settings.png' %}"></a>
+    </div>
+    {% include 'chatbot.html' %}
+</body>
+</html>

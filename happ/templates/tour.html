@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Tour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/tour.css' %}">
+</head>
+<body>
+    <div class="tour-container">
+        <button class="nav-button prev" onclick="changeSlide(-1)">&#10094;</button>
+        <div class="slider-wrapper">
+            <div class="slides">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <div class="content">
+                        <img src="{% static 'assets/images/t1.png' %}" alt="Discover Top Doctors" class="tour-image">
+                        <h2>Discover Top Doctors</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="content">
+                        <img src="{% static 'assets/images/t2.png' %}" alt="Get Expert Advice" class="tour-image">
+                        <h2>Get Expert Advice</h2>
+                        <p>Our onboard assistant provides curated health advice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="nav-button next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    <a href="{% url 'addprofile'%}" class="skip-tour">Skip Tour</a>
+
+    <script>
+        let currentIndex = 0;
+        const slidesContainer = document.querySelector(".slides");
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
+
+        // Ensure the slides container matches the number of slides
+        slidesContainer.style.width = `${slides.length * 100}vw`;
+
+        function updateSlidePosition() {
+            slidesContainer.style.transform = `translateX(-${currentIndex * 100}vw)`;
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[currentIndex].classList.add("active");
+        }
+
+        function changeSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= slides.length) currentIndex = slides.length - 1;
+            updateSlidePosition();
+        }
+    </script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine</title>
+    <link rel="stylesheet" href="{% static 'assets/css/med_aspirin.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn">&#8592;</button>
+            <h1>Cymbalta</h1>
+            <button class="info-btn">&#9432;</button>
+        </header>
+        
+        <div class="medicine-image">
+            <img src="{% static 'assets/images/pill.png' %}" alt="pill">
+        </div>
+
+        <div class="details-box">
+            <h2>Dosage</h2>
+            <p>3 times: 
+                <span class="dosage-time">9 am</span>
+                <span class="dosage-time">3 pm</span>
+                <span class="dosage-time">9 pm</span>
+            </p>
+        </div>
+
+        <div class="details-box">
+            <h2>Program</h2>
+            <p>Total 8 weeks: <strong>6 weeks left</strong></p>
+        </div>
+
+        <div class="details-box">
+            <h2>Quantity</h2>
+            <p>Total 168 tablets: <strong>126 tablets left</strong></p>
+        </div>
+        
+        <button class="schedule-btn">Change Schedule</button>
+    </div>
+    {% include 'chatbot.html' %}
+</body>
+</html>

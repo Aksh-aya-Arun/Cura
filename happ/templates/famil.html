@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>My Family</title>
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👋 Hi {{ user.username }}!</h1>
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'assets/images/profile.png' %}" alt="Profile Picture">
+            {% endif %}
+        </div>
+
+        <h2 style="color: #432c81;">My Family</h2>
+
+        <div class="family-section">
+            <!-- ✅ Primary User (Me) -->
+            {% if profile %}
+                <a href="{% url 'home' %}" class="family-card">
+                    <h3>Me</h3>
+                    {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" alt="Me">
+                    {% else %}
+                        <img src="{% static 'assets/images/office-man.png' %}" alt="Me">
+                    {% endif %}
+                </a>
+            {% endif %}
+
+            <!-- ✅ Family Members -->
+            {% for member in family_members %}
+                <a href="{% url 'home' member.id %}" class="family-card">
+                    <h3>{{ member.name }} ({{ member.relationship }})</h3>
+                    {% if member.photo %}
+                        <img src="{{ member.photo.url }}" alt="{{ member.name }}">
+                    {% else %}
+                        <img src="{% static 'assets/images/default-avatar.png' %}" alt="{{ member.name }}">
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="{% url 'famil' %}"><img src="{% static 'assets/images/navbar/modules-active.png' %}"></a>
+        <a href="{% url 'leaderboard' %}"><img src="{% static 'assets/images/navbar/graph.png' %}"></a>
+        <a href="{% url 'notifications' %}"><img src="{% static 'assets/images/navbar/bell.png' %}"></a>
+        <a href="{% url 'settings' %}"><img src="{% static 'assets/images/navbar/settings.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

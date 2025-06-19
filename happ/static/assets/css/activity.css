@@ -1,0 +1,129 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 20px;
+    gap: 10px; /* Add space between the arrow and the title card */
+}
+
+.back-button {
+    text-decoration: none;
+    font-size: 24px;
+    color: #3D2174;
+    cursor: pointer;
+}
+
+.title-card {
+    background-color: #7DFFDF;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    width: calc(100% - 30px); /* Add space on both sides */
+    margin: 0 auto; /* Center the card horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.title-card img {
+    height: 50px;
+    width: auto;
+}
+
+h1 {
+    color: #3D2174;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem !important;
+    cursor: pointer;
+}
+
+.activity-icon {
+    width: 50px;
+    height: auto;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.activity-card {
+    margin-top: 20px;
+}
+
+.card {
+    background: #FFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card-content {
+    max-width: 70%;
+}
+
+.bold {
+    font-weight: bold;
+    color: #3D2174;
+}
+.h3 .p{
+font-size: 1.2rem;
+}
+.intensity {
+    color: #E74C3C;
+}
+
+.time {
+    color: green;
+}
+
+.activity-img {
+    width: 60px;
+    height: auto;
+}
+
+.add-btn {
+    background-color: #7DFFDF;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: #37b897;
+    transform: scale(1.1);
+}
+
+.add-btn:active {
+    transform: scale(0.95);
+}

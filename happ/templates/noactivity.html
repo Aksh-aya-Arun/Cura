@@ -1,0 +1,30 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Activities</title>
+    <link rel="stylesheet" href="{% static 'assets/css/noactivity.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="back-arrow">&#8592;</div>
+        <div class="title">My Activities</div>
+    </div>
+    
+    <div class="container">
+        <div class="illustration">
+            <img src="{% static 'assets/images/noactivity.png' %}" alt="Profile Picture">
+        </div>
+        <div class="message">Hooray! You have no activities left</div>
+        <div class="subtext">Click the plus button to add</div>
+    </div>
+    <div class="floating-button" onclick="addActivity()">
+        <span>+</span>
+    </div>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

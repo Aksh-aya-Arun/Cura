@@ -1,0 +1,143 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.notifications-page {
+    padding: 20px;
+    
+}
+
+h2 {
+    color: #3D2174;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.reminders-section, .dependents-section {
+    margin-top: 16px;
+    background-color: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3D2174;
+    margin-bottom: 8px;
+}
+
+.reminder-card {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.reminder-info {
+    display: flex;
+    align-items: center;
+}
+
+.reminder-title {
+    color: #3D2174;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.reminder-text {
+    color: #3D2174;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: right;
+}
+
+.dependent-card {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dependent-info {
+    display: flex;
+    align-items: center;
+}
+
+.dependent-name {
+    color: #3D2174;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.dependent-timings div {
+    font-size: 1rem;
+}
+
+.time-green {
+    color: #009900;
+}
+
+.time-orange {
+    color: #ff6600;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.yellow-dot { background-color: #ffcc00; }
+.blue-dot { background-color: #00aaff; }
+.purple-dot { background-color: #343cad; }
+.pink-dot{background-color:#c086fa;}
+
+/* Bottom Navigation - No Changes */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ffffff;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #3D2174;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 45px;
+}
+
+.bottom-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav a:hover {
+    opacity: 0.8;
+}

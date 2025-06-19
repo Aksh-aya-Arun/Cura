@@ -1,0 +1,138 @@
+/* Global Styles */
+body {
+    font-family:'Poppins', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensure full viewport height */
+}
+
+/* Header */
+.header {
+    display: flex;
+    flex-direction: column; /* Stack arrow and text vertically */
+    align-items: flex-start; /* Align to the left */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+/* Back Arrow */
+.back-arrow {
+    font-size: 40px !important; /* Increased size with priority */
+    color: #3D2174;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px; /* Space between arrow and title */
+}
+
+
+
+/* Medical History Title */
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3D2174;
+    margin: 0;
+}
+
+/* Sticker Section */
+.sticker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 250px;
+    margin-top: 100px; /* Push down to avoid header overlap */
+}
+
+.sticker-container img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Empty State Message */
+.message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #3D2174;
+    margin-top: 10px;
+}
+
+.sub-message {
+    font-size: 1.2rem;
+    color: #777;
+}
+
+/* Floating Action Button (FAB) */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #7DFFDF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.fab:hover {
+    background-color: #37b897;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .header {
+        left: 15px;
+    }
+
+    .back-arrow {
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .sticker-container {
+        max-width: 200px;
+        margin-top: 100px;
+    }
+
+    .message {
+        font-size: 1.2rem;
+    }
+
+    .sub-message {
+        font-size: 1.2rem;
+    }
+
+    .fab {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+        bottom: 15px;
+        right: 15px;
+    }
+}

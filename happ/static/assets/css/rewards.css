@@ -1,0 +1,225 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%; /* Prevent auto zoom */
+    touch-action: manipulation;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.container {
+    width: 100%;
+    max-width: 320px; /* Ensures mobile aspect ratio */
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    color: #3D2174;
+    margin: 0;
+}
+
+
+/* Profile Section */
+.profile-section {
+    text-align: center;
+}
+
+.profile-image {
+    position: relative;
+    display: inline-block;
+    background-color: #E0D4F8; /* Purple background */
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.profile-image img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: none;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.profile-section h2 {
+    margin: 10px 0 5px;
+    color: #3D2174;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.profile-section p {
+    color: #6D5BA4;
+    font-size: 1rem;
+}
+
+/* Claimables Section */
+.claimables-section {
+    margin-top: 20px;
+}
+
+.claimables-section h3 {
+    color: #3D2174;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+/* Voucher Styling */
+/* Adjusting XP Badge Position (Moving Slightly Higher) */
+.xp {
+    display: flex;
+    align-items: center;
+    background-color: #E0D4F8;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #3D2174;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 12%; /* Keeps it aligned */
+    top: 5px; /* Moved slightly higher */
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Ensuring XP Badge Adjusts Properly for Small Screens */
+@media screen and (max-width: 320px) {
+    .xp {
+        right: 8%; /* Ensures XP remains visible */
+        top: -2px; /* Moves it even higher for small screens */
+    }
+}
+
+
+/* Adjusting Voucher Card Position */
+.voucher {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 10px auto 10px -2px; /* Centers properly */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    width: 88%; /* Maintains even spacing */
+    max-width: 300px;
+    box-sizing: border-box;
+    position: relative;
+    left: -5px; /* Moves the card slightly left */
+}
+
+/* Ensuring Perfect Responsiveness for 320px Screens */
+@media screen and (max-width: 320px) {
+    .voucher {
+        width: 92%; /* Prevents overflow on smaller screens */
+        left: -3px; /* Slightly moves it left */
+    }
+    .xp {
+        right: 8%; /* Ensures XP remains visible */
+    }
+}
+
+
+/* Voucher Left: Text */
+.voucher-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Ensures vertical alignment */
+}
+
+.voucher-left h4 {
+    margin: 0;
+    color: #3D2174;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.voucher-type {
+    margin: 5px 0 0;
+    color: #6D5BA4;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* QR Code and Price: Proper Alignment */
+.voucher-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjusted spacing */
+}
+
+.qr-image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+}
+
+.voucher-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    min-width: 40px; /* Ensures consistency */
+    text-align: right;
+    display: flex;
+    align-items: center; /* Centers text */
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 320px; /* Ensures it stays in aspect */
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ffffff;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #3D2174;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 45px;
+}
+
+.bottom-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav a:hover {
+    opacity: 0.8;
+}

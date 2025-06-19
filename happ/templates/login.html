@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+    <script type="module" src="{% static 'assets/firebase/firebase-config.js' %}"></script>
+</head>
+<body>
+    <div class="login-page">
+        <h2>Welcome Back</h2>
+        <img src="{% static 'assets/images/cura-logo.png' %}" alt="CURA Logo" class="logo">
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <!-- ✅ Fixed: Ensuring proper form submission with debugging -->
+        <form class="login-form" id="loginForm" method="POST" action="{% url 'login' %}" onsubmit="return confirmLogin();">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" class="input-field" required autocomplete="username">
+            
+            <div class="password-container">
+                <input type="password" name="password" id="loginPassword" placeholder="Password" class="input-field" required autocomplete="current-password">
+                <span class="toggle-password" onclick="togglePassword('loginPassword')">
+                    <img id="eyeIcon" src="{% static 'assets/images/eye.png' %}" alt="toggle-password" style="width: 20px; cursor: pointer;">
+                </span>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+        <button class="singpass-button">
+            Log in with 
+            <img src="{% static 'assets/images/singpass-logo.png' %}" alt="SingPass Logo" class="singpass-logo">        
+        </button>
+        
+        <p class="signup-text">
+            Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+        </p>
+    </div>
+
+    <!-- ✅ Added debugging script -->
+    <script>
+        function confirmLogin() {
+            console.log("🚀 Login form submitted!");
+            return true; // Ensures form actually submits
+        }
+
+        function togglePassword(fieldId) {
+            let passwordField = document.getElementById(fieldId);
+            if (passwordField) {
+                passwordField.type = passwordField.type === "password" ? "text" : "password";
+            }
+        }
+    </script>
+    <script>
+        function togglePassword(fieldId) {
+            let passwordField = document.getElementById(fieldId);
+            let eyeIcon = document.getElementById("eyeIcon");
+    
+            if (passwordField) {
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                    eyeIcon.src = "{% static 'assets/images/visible.png' %}"; // Change to open eye icon
+                } else {
+                    passwordField.type = "password";
+                    eyeIcon.src = "{% static 'assets/images/eye.png' %}"; // Change to closed eye icon
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>

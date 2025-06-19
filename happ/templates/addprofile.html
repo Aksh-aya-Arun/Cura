@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/addprofile.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Profile</h1>
+
+        <form class="form-content" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Primary User Information Section -->
+            <div class="section">
+                <h2>Primary User Information</h2>
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter name" required>
+
+                <label>Age</label>
+                <input type="number" name="age" placeholder="Enter age" required>
+
+                <label>Gender</label>
+                <select name="gender" required>
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label>Date of Birth</label>
+                <input type="date" name="dob" required>
+
+                <label>Phone Number</label>
+                <input type="tel" name="phone" placeholder="Enter phone number" required>
+
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+
+                <label>Primary Location</label>
+                <input type="text" name="location" placeholder="Enter location" required>
+
+                <label>Emergency Contact</label>
+                <input type="text" name="emergency" placeholder="Enter emergency contact" required>
+
+                <label>Profile Photo</label>
+                <input type="file" name="photo" accept="image/*">
+            </div>
+
+            <!-- Family Members Section Container -->
+            <div id="family-section-container"></div>
+
+            <!-- Hidden Template for Family Member Section -->
+            <template id="family-template">
+                <div class="section family-member">
+                    <h2>Family Member</h2>
+
+                    <label>Name</label>
+                    <input type="text" name="family_name[]" placeholder="Enter name" required>
+
+                    <label>Relationship</label>
+                    <input type="text" name="relationship[]" placeholder="Enter relationship" required>
+
+                    <label>Age</label>
+                    <input type="number" name="family_age[]" placeholder="Enter age" required>
+
+                    <label>Gender</label>
+                    <select name="family_gender[]" required>
+                        <option value="" disabled selected>Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label>Location</label>
+                    <input type="text" name="family_location[]" placeholder="Enter location" required>
+
+                    <label>Profile Photo</label>
+                    <input type="file" name="family_photo[]" accept="image/*">
+
+                    <button type="button" class="remove-family-member">Remove</button>
+                </div>
+            </template>
+
+            <!-- Move Add Family Member Button Below the Family Section -->
+            <div class="button-group">
+                <button type="button" id="add-family-member" class="add-button green">Add Family Member</button>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button-group">
+                <button type="submit" class="nav-button next">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('add-family-member').addEventListener('click', function () {
+            var template = document.getElementById('family-template').content.cloneNode(true);
+            
+            // Ensure inputs are blank
+            template.querySelectorAll("input, select").forEach(field => {
+                field.value = "";
+            });
+
+            // Add remove functionality
+            template.querySelector(".remove-family-member").addEventListener("click", function () {
+                this.closest(".family-member").remove();
+            });
+
+            document.getElementById('family-section-container').appendChild(template);
+        });
+
+        // Prevent submission if required fields are empty
+        document.querySelector("form").addEventListener("submit", function (event) {
+            let invalidFields = document.querySelectorAll(":invalid");
+            if (invalidFields.length > 0) {
+                event.preventDefault();
+                invalidFields[0].focus();
+            }
+        });
+    </script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

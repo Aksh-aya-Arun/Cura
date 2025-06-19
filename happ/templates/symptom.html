@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Symptom Log</title>
+    <link rel="stylesheet" href="{% static 'assets/css/symptom.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+    <style>
+        /* Style for the back button */
+        .back-button {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-button">&#8592;</a>
+
+        <h1>Symptom Log</h1>
+        <div class="card">
+            <h2>How Am I Feeling Today  ❤️</h2>
+        </div>
+
+        <div class="card">
+            <h3>WAQ</h3>
+            <p>Today's Wellness Assessment Questionnaire</p>
+        </div>
+
+        <div class="card">
+            <h3>Symptom Tracker</h3>
+            <p>Log any pain, fatigue, or discomfort.</p>
+        </div>
+
+        <div class="card">
+            <h3>Medication Reminder</h3>
+            <p>Check your medication schedule for today.</p>
+        </div>
+
+        <div class="card">
+            <h3>Doctor's Note</h3>
+            <p>View any notes or advice from your healthcare provider.</p>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="{% url 'famil'%}"><img src="{% static 'assets\images\navbar\modules-active.png' %}"></a>
+        <a href="{% url 'leaderboard'%}"><img src="{% static 'assets\images\navbar\graph.png' %}"></a>
+        <a href="{%url 'notifications' %}"><img src="{% static 'assets\images\navbar\bell.png' %}"></a>
+        <a href="{% url 'settings'%}"><img src="{% static 'assets\images\navbar\settings.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

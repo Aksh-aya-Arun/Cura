@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.signup-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #3D2174;
+    margin-bottom: 20px;
+}
+
+.signup-form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-field {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #00c4c4;
+    font-size: 18px;
+}
+
+.forgot-password {
+    font-size: 1rem;
+    color: #3D2174;
+    text-decoration: none;
+    text-align: right;
+}
+
+.signup-button {
+    padding: 12px;
+    background-color: #00c4c4;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-text {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #3D2174;
+}
+
+.login-text a {
+    color: #3D2174;
+    text-decoration: none;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}

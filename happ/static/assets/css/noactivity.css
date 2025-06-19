@@ -1,0 +1,94 @@
+body {
+    font-family: 'Poppins',sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.header {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align to the left */
+    padding-left: 20px;
+    font-size: 24px;
+
+}
+
+.back-arrow {
+    margin-top: 25px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3D2174;
+    margin-top: 10px;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.illustration img {
+    width: 250px;
+    height: auto;
+}
+
+.message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #3D2174;
+    margin-top: 20px;
+}
+
+.subtext {
+    font-size: 1rem;
+    color: #777;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background-color: #7DFFDF !important; /* Ensure primary color is applied */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.floating-button:hover {
+    background-color: #37B897 !important; /* Apply hover color */
+}
+
+
+
+.floating-button span {
+    font-size: 30px;
+    color: #fff;
+}
+
+.floating-button::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    /* border: 2px dashed #FFC107; */
+    opacity: 0.5;
+    bottom: -10px;
+    right: -10px;
+}

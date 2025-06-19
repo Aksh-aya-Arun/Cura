@@ -1,0 +1,47 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>My Activities</title>
+    <link rel="stylesheet" href="{% static 'assets\css\activity.css' %}">
+    <script defer src="{% static 'assets\js\scripts.js'%}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- Back arrow -->
+            <a href="{% url 'home' %}" class="back-button">&#8592;</a>
+            <!-- Title card -->
+            <div class="title-card">
+                <h1>My Activities</h1>
+                <img src="{% static 'assets/images/activity.png' %}" alt="Activity Icon">
+            </div>
+        </div>
+        <section class="activity-card today">
+            <h1>Today</h1>
+            <br>
+            <div class="card">
+                <div class="card-content">
+                    <h3><span class="bold">Play a game!</span></h3>
+                    <p class="intensity">Moderate to Intensive</p>
+                    <p class="time">30-45mins</p>
+                </div>
+                <img src="{% static 'assets/images/football.png' %}" alt="Basketball Player" class="activity-img">
+            </div>
+        </section>
+        
+        <section class="activity-card yesterday">
+            <h1>Yesterday</h1>
+            <br>
+            <div class="card">
+                <p>You have played basketball for 1hr!</p>
+            </div>
+        </section>
+        
+        <button class="add-btn">+</button>
+    </div>
+    {% include 'chatbot.html' %}
+</body>
+</html>

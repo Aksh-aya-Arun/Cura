@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/settings.css' %}">
+</head>
+<body>
+    <div class="settings-page">
+        <h2>Settings</h2>
+        <div class="profile-section">
+            <img src="{% static 'assets/images/profile-pic.png' %}" alt="Profile Picture" class="profile-pic">
+            <h1>{{ user.username}}</h1>
+            <p>{{ user.email}}</p>
+        </div>
+
+        <div class="settings-options">
+            <a href="#" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/account-icon.png' %}" alt="Account Icon" class="option-icon">
+                    <span>Account</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="#" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/notification-icon.png' %}" alt="Notification Icon" class="option-icon">
+                    <span>Notification</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="{% url 'rewards' %}" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/awards-icon.png' %}" alt="Awards Icon" class="option-icon">
+                    <span>My Rewards</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="#" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/privacy-icon.png' %}" alt="Privacy Icon" class="option-icon">
+                    <span>Privacy & Security</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="#" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/sound-icon.png' %}" alt="Sound Icon" class="option-icon">
+                    <span>Sound</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="#" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/icons/language-icon.png' %}" alt="Language Icon" class="option-icon">
+                    <span>Language</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>
+            <a href="{% url 'logout' %}" class="option">
+                <div class="left-section">
+                    <img src="{% static 'assets/images/logout.png' %}" alt="Logout Icon" class="option-icon">
+                    <span>Logout</span>
+                </div>
+                <span class="arrow">&#8250;</span>
+            </a>           
+        </div>
+
+        <div class="bottom-nav">
+            <a href="{% url 'famil'%}"><img src="{% static 'assets\images\navbar\modules.png' %}"></a>
+            <a href="{% url 'leaderboard'%}"><img src="{% static 'assets\images\navbar\graph.png' %}"></a>
+            <a href="{%url 'notifications' %}"><img src="{% static 'assets\images\navbar\bell.png' %}"></a>
+            <a href="{% url 'settings'%}"><img src="{% static 'assets\images\navbar\settings-active.png' %}"></a>
+        </div>
+    </div>
+    {% include 'chatbot.html' %}
+</body>
+</html>

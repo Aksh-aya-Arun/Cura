@@ -1,0 +1,70 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/css/settingscroll.css' %}">
+    <title>Settings</title>
+</head>
+<body>
+    <div class="settings-container">
+        <header>
+            <h1>Settings</h1>
+        </header>
+        <ul class="settings-list">
+            <li>
+                <div class="left">
+                    <span class="icon user-icon"></span>
+                    <a href="#">Account</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+            <li>
+                <div class="left">
+                    <span class="icon notification-icon"></span>
+                    <a href="#">Notification</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+            <li>
+                <div class="left">
+                    <span class="icon appearance-icon"></span>
+                    <a href="#">Appearance</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+            <li>
+                <div class="left">
+                    <span class="icon privacy-icon"></span>
+                    <a href="#">Privacy & Security</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+            <li>
+                <div class="left">
+                    <span class="icon sound-icon"></span>
+                    <a href="#">Sound</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+            <li>
+                <div class="left">
+                    <span class="icon language-icon"></span>
+                    <a href="#">Language</a>
+                </div>
+                <span class="right-arrow">&gt;</span>
+            </li>
+        </ul>
+    </div>
+    <div class="bottom-nav">
+        <a href="{% url 'famil'%}"><img src="{% static 'assets\images\navbar\modules.png' %}"></a>
+        <a href="{% url 'leaderboard'%}"><img src="{% static 'assets\images\navbar\graph.png' %}"></a>
+        <a href="{%url 'notifications' %}"><img src="{% static 'assets\images\navbar\bell.png' %}"></a>
+        <a href="{% url 'settings'%}"><img src="{% static 'assets\images\navbar\settings-active.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

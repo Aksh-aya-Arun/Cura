@@ -1,0 +1,70 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="{% static 'assets/css/appointments.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="{% url 'home' %}" class="back-button">&#8592;</a>
+            <div class="title-card">
+                <h2>Appointments</h2>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <section class="appointment-container">
+            <div class="appointment-card">
+                <div class="appointment-details">
+                    <p class="appointment-date">Wednesday, 7 Nov</p>
+                    <p class="appointment-time">11:00</p>
+                    <p class="appointment-type">Cardiology Diagnostic Lab<br>Echocardiogram</p>
+                    <p class="appointment-location">8 Sinaran Dr, #02-02/03, Singapore 307470</p>
+                </div>
+                <div class="map-thumbnail">
+                    <img src="{% static 'assets/images/loc1.jpg' %}" alt="Map Location">
+                </div>
+            </div>
+        </section>
+
+        <section class="appointment-container">
+            <div class="appointment-card">
+                <div class="appointment-details">
+                    <p class="appointment-date">Tuesday, 12 Nov</p>
+                    <p class="appointment-time">13:30</p>
+                    <p class="appointment-type">Sports & Exercise Medicine<br>Physiotherapy</p>
+                    <p class="appointment-location">9 N Buona Vista Dr, #01-20, Singapore 138589</p>
+                </div>
+                <div class="map-thumbnail">
+                    <img src="{% static 'assets/images/loc2.jpg' %}" alt="Map Location">
+                </div>
+            </div>
+        </section>
+
+        <section class="appointment-container">
+            <div class="appointment-card">
+                <div class="appointment-details">
+                    <p class="appointment-date">Friday, 17 Dec</p>
+                    <p class="appointment-time">10:45</p>
+                    <p class="appointment-type">Psychological Department<br>Weekly Wellbeing Consult</p>
+                    <p class="appointment-location">10 Anson Rd, #10-26, Singapore 079903</p>
+                </div>
+                <div class="map-thumbnail">
+                    <img src="{% static 'assets/images/loc3.jpg' %}" alt="Map Location">
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Action Button -->
+        <button class="fab" onclick="addAppointment()">+</button>
+    </div>
+
+    <script src="{% static 'assets/js/appointments.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

@@ -1,0 +1,107 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #7DFFDF;
+    color: #3D2174;
+    padding: 15px;
+    font-size: 18px;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    left: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #3D2174;
+    cursor: pointer;
+}
+
+.medicine-type button {
+    background: #e0e0e0;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.medicine-type .active {
+    background: #7DFFDF;
+    font-weight: bold;
+    color: #3D2174;
+}
+
+.schedule-section, .schedule-box {
+    background: #fff;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.schedule-section label, .schedule-box label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color:#3D2174
+}
+
+.dosage-counter {
+    display: flex;
+    align-items: center;
+}
+
+.dosage-counter button {
+    background: #7DFFDF;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#dosage-amount {
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+#alarm-toggle {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.add-schedule-btn {
+    background: #7DFFDF;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%;
+    margin-top: 15px;
+    color:#3D2174;
+}

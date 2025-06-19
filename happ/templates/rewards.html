@@ -1,0 +1,65 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>My Rewards</title>
+    <link rel="stylesheet" href="{% static 'assets/css/rewards.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>My Rewards</h1>
+            <div class="xp">XP 200</div>
+        </header>
+
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="{% static 'assets/images/father.png' %}" alt="Profile Picture">
+                <div class="edit-icon">✏️</div>
+            </div>
+            <h2>Steven</h2>
+            <p>steven@mail.com</p>
+        </div>
+
+        <div class="claimables-section">
+            <h3>Claimables</h3>
+            
+            <div class="voucher">
+                <div class="voucher-left">
+                    <h4>XXX</h4>
+                    <p class="voucher-type">Vouchers</p>
+                </div>
+                <div class="voucher-right">
+                    <img src="{% static 'assets/images/qr.png' %}" alt="QR Code" class="qr-image">
+                    <span class="voucher-price">$30</span>
+                </div>
+            </div>
+
+            <div class="voucher">
+                <div class="voucher-left">
+                    <h4>YYY</h4>
+                    <p class="voucher-type">Vouchers</p>
+                </div>
+                <div class="voucher-right">
+                    <img src="{% static 'assets/images/qr.png' %}" alt="QR Code" class="qr-image">
+                    <span class="voucher-price">$20</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="{% url 'famil'%}"><img src="{% static 'assets/images/navbar/modules.png' %}"></a>
+        <a href="{% url 'leaderboard'%}"><img src="{% static 'assets/images/navbar/graph.png' %}"></a>
+        <a href="{% url 'notifications' %}"><img src="{% static 'assets/images/navbar/bell.png' %}"></a>
+        <a href="{% url 'settings'%}"><img src="{% static 'assets/images/navbar/settings-active.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

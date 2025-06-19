@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>{{ user_profile.name }}'s Home</title>
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👋 Hi {{ user_profile.name }}!</h1>
+            {% if user_profile.photo %}
+                <img src="{{ user_profile.photo.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'assets/images/profile.png' %}" alt="Profile Picture">
+            {% endif %}
+        </div>
+
+        <div class="family-section">
+            <a href="{% url 'symptom' %}" class="family-card">
+                <h3>Tracking</h3>
+                <img src="{% static 'assets/images/calender.png' %}" alt="Calender">
+            </a>
+            <a href="{% url 'medications' %}" class="family-card">
+                <h3>Medications</h3>
+                <img src="{% static 'assets/images/medi.png' %}" alt="Medi">
+            </a>
+            <div class="family-card">
+                <h3>Doctor Notes</h3>
+                <img src="{% static 'assets/images/notes.png' %}" alt="Notes">
+            </div>
+            <div class="family-card">
+                <h3>Online Chat</h3>
+                <img src="{% static 'assets/images/chat.png' %}" alt="Chat">
+            </div>
+            <a href="{% url 'journal' %}" class="family-card">
+                <h3>My Journal</h3>
+                <img src="{% static 'assets/images/jour.png' %}" alt="Papers">
+            </a>
+            <a href="{% url 'appointments' %}" class="family-card">
+                <h3>Appointments</h3>
+                <img src="{% static 'assets/images/appoint.png' %}" alt="Papers">
+            </a>
+            <a href="{% url 'activity' %}" class="family-card">
+                <h3>My Activity</h3>
+                <img src="{% static 'assets/images/acti.png' %}" alt="Papers">
+            </a>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="{% url 'famil' %}"><img src="{% static 'assets/images/navbar/modules-active.png' %}"></a>
+        <a href="{% url 'leaderboard' %}"><img src="{% static 'assets/images/navbar/graph.png' %}"></a>
+        <a href="{% url 'notifications' %}"><img src="{% static 'assets/images/navbar/bell.png' %}"></a>
+        <a href="{% url 'settings' %}"><img src="{% static 'assets/images/navbar/settings.png' %}"></a>
+    </div>
+
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    {% include 'chatbot.html' %}
+</body>
+</html>

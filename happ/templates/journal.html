@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>My Journal</title>
+    <link rel="stylesheet" href="{% static 'assets/css/journal.css' %}">
+    <style>
+        .question-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+        }
+        .question-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Common button styling for both Next and Previous */
+        .journal-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #7DFFD4;
+            color: #353535;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .journal-button:hover {
+            background-color: #7DFFDF;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #7DFFD4;
+            width: 0;
+            transition: width 0.4s ease;
+        }
+        .entry-container {
+            animation: fadeIn 0.8s ease-in;
+            position: relative;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .notes-toggle {
+            position: relative;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #353535;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .notes-toggle:hover { color: #353535; }
+        .extra-notes {
+            display: none;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: hsla(156, 10%, 90%, 0.5);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            text-align: center;
+            border: none;
+            outline: none;
+        }
+        .notes-container {
+            margin-top: 10px;
+            position: relative;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{% url 'home' %}" class="back-button">&#8592;</a>
+            <div class="title-card">
+                <h1>My Journal</h1>
+                <img src="{% static 'assets/images/journallogo.png' %}" alt="Journal Icon">
+            </div>
+        </div>
+
+        <!-- Health Tracking Form -->
+        <div class="entry-container">
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <h3>Daily Health Tracker</h3>
+            <form method="POST" action="{% url 'journal' %}" id="journalForm">
+                {% csrf_token %}
+                <div class="question-section" id="question-container">
+                    <!-- Questions will be injected dynamically -->
+                </div>
+            
+                <!-- ✅ Toggleable Extra Notes Section -->
+<!-- ✅ Personal Log Section -->
+<div class="personal-log-container">
+    <div class="personal-log-card">
+        <div class="personal-log-text">
+            <strong>Personal Log</strong>
+            <p>Something you wish to say.</p>
+        </div>
+        <button type="button" class="personal-log-button" id="toggleNotes">
+            <span>+</span>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ Hidden Textarea for Notes -->
+<textarea name="extraNote" id="extraNote" class="extra-notes" placeholder="Write your personal log here..."></textarea>
+
+            
+                <!-- Button Group: Previous and Next/Submit -->
+                <div class="button-group">
+                    <button type="button" id="prevButton" class="journal-button" style="display: none;">Previous</button>
+                    <button type="button" id="nextButton" class="journal-button">Next</button>
+                </div>
+                
+                <!-- See Previous Section -->
+<div class="see-previous-container">
+    <h3>See Previous</h3>
+    <div class="previous-entry-card">
+        <p>Yesterday</p>
+        <span class="clock-icon">🕒</span>
+    </div>
+</div>
+
+
+            </form>
+            
+        </div>
+
+        <!-- ✅ Linked Updated JS -->
+        <script src="{% static 'assets/js/journal.js' %}"></script>
+        {% include 'chatbot.html' %}
+    </div>
+</body>
+</html>

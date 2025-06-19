@@ -1,0 +1,157 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #3D2174;
+    overflow-y: auto;
+}
+
+.settings-page {
+    padding: 20px;
+    font-size: 1.5rem;
+}
+
+/* Header Section */
+.settings-page h2 {
+    font-size: 1.8rem; /* Increased from 18px */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Centered Profile Section */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #3D2174;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 18px; /* Increased from 16px */
+    font-weight: 600;
+    margin: 0;
+}
+
+p {
+    font-size: 1.2rem; /* Increased from 11px */
+    color: #3D2174;
+    margin: 5px 0 0;
+}
+
+/* Settings Options Section */
+.settings-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Slightly increased padding */
+    background-color: transparent;
+    border-bottom: 1px solid #ffffff;
+    text-decoration: none;
+    color: #3D2174;
+    font-size: 1.2rem; /* Increased from 12px */
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Increased spacing */
+}
+
+.option-icon {
+    width: 20px; /* Increased size */
+    height: 20px;
+}
+
+.arrow {
+    color: #3D2174;
+    font-size: 16px; /* Increased from 14px */
+}
+
+/* Bottom Navigation - No Changes */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ffffff;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #3D2174;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 45px;
+}
+
+.bottom-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav a:hover {
+    opacity: 0.8;
+}
+
+/* Scrolling Fix */
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .profile-pic {
+        width: 55px;
+        height: 55px;
+    }
+
+    h1 {
+        font-size: 16px;
+    }
+
+    .option {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .option-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .arrow {
+        font-size: 14px;
+    }
+
+    .bottom-nav img {
+        width: 18px;
+        height: 18px;
+    }
+}

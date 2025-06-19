@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Medication Schedule</title>
+    <link rel="stylesheet" href="{% static 'assets/css/med_schedule.css' %}">
+    <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-btn">&#8592;</button>
+            <h1>Fix Medications Schedule</h1>
+        </header>
+
+        <div class="medicine-type">
+            <button class="active">Tablet</button>
+            <button>Capsule</button>
+            <button>Drops</button>
+            <button>Injection</button>
+        </div>
+
+        <div class="schedule-section">
+            <label>Reminder Times</label>
+            <select id="reminder-times">
+                <option value="once">Once</option>
+                <option value="twice">Twice</option>
+                <option value="thrice">Thrice</option>
+            </select>
+        </div>
+
+        <div class="schedule-section">
+            <label>Dosage (per day)</label>
+            <div class="dosage-counter">
+                <button id="decrease">-</button>
+                <span id="dosage-amount">1</span>
+                <button id="increase">+</button>
+            </div>
+        </div>
+
+        <div class="schedule-section">
+            <label>Time</label>
+            <input type="time" id="time-picker">
+        </div>
+
+        <div class="schedule-box">
+            <label>Start</label>
+            <select id="start-date">
+                <option>Today</option>
+                <option>Tomorrow</option>
+            </select>
+        </div>
+
+        <div class="schedule-box">
+            <label>Days</label>
+            <select id="days">
+                <option>Every Day</option>
+                <option>Alternate Days</option>
+                <option>Weekdays Only</option>
+            </select>
+        </div>
+
+        <div class="schedule-box">
+            <label>Duration</label>
+            <select id="duration">
+                <option>1 Week</option>
+                <option>2 Weeks</option>
+                <option>1 Month</option>
+            </select>
+        </div>
+
+        <div class="schedule-box">
+            <label>Alarm</label>
+            <input type="checkbox" id="alarm-toggle">
+        </div>
+
+        <div class="schedule-box">
+            <label>Snooze</label>
+            <select id="snooze">
+                <option>2 min</option>
+                <option>5 min</option>
+                <option>10 min</option>
+            </select>
+        </div>
+
+        <button class="add-schedule-btn" id="add-schedule-btn">Add Schedule</button>
+    </div>
+
+    <div class="medicine-list" id="medicineList"></div>
+    {% include 'chatbot.html' %}
+
+</body>
+</html>
