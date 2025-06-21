@@ -26,6 +26,7 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=200)
     emergency_contact = models.CharField(max_length=15)
     photo = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    assigned_doctor = models.ForeignKey('Doctor', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -41,3 +42,14 @@ class FamilyMember(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.relationship})"
+    
+class Doctor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    doctor_id = models.CharField(max_length=20, unique=True)
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    speciality = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+
+    def __str__(self):
+        return f"Dr. {self.full_name} ({self.speciality})"

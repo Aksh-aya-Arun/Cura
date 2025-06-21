@@ -1,24 +1,101 @@
+# ─── views.py  (imports) ──────────────────────────────────────────────────────
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile  # Profile model must have is_new field
-from .models import UserProfile, FamilyMember
-from django.core.mail import send_mail
-import matplotlib.pyplot as plt
-from datetime import datetime
-import numpy as np
-from django.core.mail import EmailMessage
-from datetime import datetime
-import os
-import matplotlib
-matplotlib.use('Agg')
+
+from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
-from .models import Profile, JournalEntry  # Import existing models
-from django.http import JsonResponse
+from django.db import transaction  
+
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import os, json
+from datetime import datetime
+
+from .models import (
+    Profile, UserProfile, FamilyMember,
+    JournalEntry, Doctor
+)
+from .forms import (
+    DoctorSignupForm, UserProfileForm, FamilyMemberForm
+)
+def signup_choice(request):
+    """
+    Shows the “Patient or Doctor?” choice screen.
+    """
+    return render(request, "signup_choice.html")
+# ─── Doctor sign-up (public — NO login_required) ─────────────────────────────
+def doctor_signup(request):
+    """
+    Create a new Doctor account + linked Django User in one atomic step.
+    Username == doctor_id so the doctor logs in with that ID.
+    """
+    if request.method == "POST":
+        form = DoctorSignupForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                # split out the extra password field
+                pwd        = form.cleaned_data.pop('password')
+                doctor_id  = form.cleaned_data["doctor_id"]
+                email      = form.cleaned_data["email"]
+
+                # 1) create auth user
+                user = User.objects.create_user(
+                    username=doctor_id,
+                    email=email,
+                    password=pwd
+                )
+
+                # 2) create Doctor profile
+                doctor           = form.save(commit=False)
+                doctor.user      = user
+                doctor.full_name = form.cleaned_data["full_name"]
+                doctor.save()
+
+            messages.success(request, "Doctor account created — please sign in.")
+            return redirect("doctor_login")
+    else:
+        form = DoctorSignupForm()
+
+    # ✅ FIXED TEMPLATE PATH
+    return render(request, "doctor_signup.html", {"form": form})
+
+# ... (all your other imports)
+from django.contrib.auth.decorators import login_required
+
+# ─── Doctor login ────────────────────────────────────────────────
+def doctor_login(request):
+    """
+    Doctor sign-in via doctor_id + password.
+    """
+    if request.method == "POST":
+        doctor_id = request.POST.get("doctor_id")
+        password  = request.POST.get("password")
+
+        user = authenticate(request, username=doctor_id, password=password)
+
+        # user must exist *and* be linked to a Doctor profile
+        if user and Doctor.objects.filter(user=user).exists():
+            login(request, user)
+            return redirect("doctor_dashboard")          # <── straight to dashboard
+        messages.error(request, "Invalid Doctor ID or password.")
+
+    return render(request, "doctor_login.html")
+
+
+# ─── Doctor dashboard ────────────────────────────────────────────
+@login_required(login_url="doctor_login")                # <── explicit!
+def doctor_dashboard(request):
+    doctor   = Doctor.objects.filter(user=request.user).first()
+    patients = UserProfile.objects.filter(assigned_doctor=doctor) if doctor else []
+    return render(request, "doctor_dashboard.html",
+                  {"doctor": doctor, "patients": patients})
 
 
 # Temporary storage for user tokens (use a database in production)

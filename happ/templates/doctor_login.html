@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <title>Doctor Login</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'assets/css/doctor.css' %}">
+  <script defer src="{% static 'assets/js/scripts.js' %}"></script>
+</head>
+<body>
+  <div class="login-page">
+    <h2>Welcome Back, Doctor</h2>
+    <img src="{% static 'assets/images/cura-logo.png' %}" alt="CURA Logo" class="logo">
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form class="login-form" method="POST" action="{% url 'doctor_login' %}"
+          onsubmit="console.log('🚀 Doctor login form submitted')">
+      {% csrf_token %}
+      <input  type="text" name="doctor_id" placeholder="Doctor ID" class="input-field" required>
+      <div class="password-container" style="width: 100%; position: relative;">
+  <input type="password" name="password" id="doctorLoginPassword"
+         placeholder="Password" class="input-field" style="width: 100%;" required>
+  <span class="toggle-password"
+        onclick="togglePassword('doctorLoginPassword')"
+        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+    <img id="eyeIcon" src="{% static 'assets/images/eye.png' %}" alt="toggle-password" width="20">
+  </span>
+</div>
+
+      <button type="submit" class="login-button">Login</button>
+    </form>
+
+    <p class="signup-text">
+      Need an account? <a href="{% url 'doctor_signup' %}">Sign Up</a>
+    </p>
+  </div>
+</body>
+</html>

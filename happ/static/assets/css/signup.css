@@ -87,3 +87,34 @@ h2 {
 .login-text a:hover {
     text-decoration: underline;
 }
+
+/* ───── Enhancements for Doctor Signup ───── */
+
+/* Soft placeholder styling */
+.input-field::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Django messages styling */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.messages li {
+    background-color: #ffe0e0;
+    color: #990000;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.messages li.success {
+    background-color: #e0ffe6;
+    color: #006600;
+}

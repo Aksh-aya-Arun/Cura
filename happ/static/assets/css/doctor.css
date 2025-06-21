@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  overflow: hidden;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Shared containers (same classes as patient CSS) */
+.signup-page,
+.login-page,
+.choice-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: #3D2174;
+  border-bottom: 4px solid #00c4c4;
+  padding-bottom: 6px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Form containers */
+.signup-form,
+.login-form {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Shared fields and buttons */
+.input-field,
+.signup-button,
+.login-button,
+.btn {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Primary buttons */
+.signup-button,
+.login-button,
+.btn {
+  background: #00c4c4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Patient and Doctor button overrides */
+.btn.patient-btn {
+  background: #00c4c4;
+}
+
+.btn.doctor-btn {
+  background: #00c4c4;
+}
+
+/* Buttons container */
+.choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Optional: smoother mobile tap effect */
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn {
+  text-decoration: none; /* Removes underline */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* space between icon and text */
+}
+.btn i {
+  font-size: 18px;
+}

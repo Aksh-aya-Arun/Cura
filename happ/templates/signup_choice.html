@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Choose Account Type</title>
+
+  <link rel="stylesheet" href="{% static 'assets/css/doctor.css' %}">
+</head>
+<body class="choice-page">
+  <h2>Who is signing up?</h2>
+
+ <div class="choice-buttons">
+  <a href="{% url 'signup' %}" class="btn patient-btn">
+    <i class="fas fa-user"></i> Patient
+  </a>
+  <a href="{% url 'doctor_signup' %}" class="btn doctor-btn">
+    <i class="fas fa-user-md"></i> Doctor
+  </a>
+</div>
+
+</body>
+</html>
