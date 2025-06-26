@@ -10,7 +10,11 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction  
 
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
+from dotenv import load_dotenv
 
+from openai import OpenAI
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -479,42 +483,50 @@ def save_token(request):
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
-        
-        from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 
-def get_chatbot_response(user_message):
-    user_message = user_message.lower()
-    
-    # Keyword-based response mapping
-    response_mapping = [
-        {"keywords": ["hokkaido baked cheese tart"], "response": "Hokkaido Baked Cheese Tarts are delicious, but they’re high in saturated fats and sugars, which can raise cholesterol and affect heart health. Since managing fat and sugar intake is crucial for your condition, it’s best to limit these treats. If you’re looking for a tasty alternative, how about trying the Soy Pudding from Mr. Bean? It’s smooth, naturally sweetened, and lower in saturated fats—making it a more heart-friendly choice. Let me know if you’d like more snack recommendations around Singapore!"},
-        
-        {"keywords": ["feeling good"], "response": "Good to hear!"},
-        
-        {"keywords": ["not good"], "response": "Any discomfort you feel?"},
-        
-        {"keywords": ["knee pain", "exercise alternative"], "response": "Hey! Sorry to hear you’re dealing with limb pain. That sounds uncomfortable. Since you’ve got coronary artery disease, it’s super important to choose exercises that are gentle on your body while still keeping your heart healthy. If your doctor, Dr. Lim, previously recommended the seated leg raise (10 reps, 3 sets), you could try swapping it for ankle pumps (15 reps per leg). They’re great for improving circulation without putting too much strain on your limbs. Another simple option is the heel-to-toe walk—do this for about 5 minutes. It helps with balance and leg strength but is still low-impact. If you’re feeling up to it, gentle stretches like calf stretches against the wall (hold for 20 seconds, repeat 3 times per leg) can also relieve tension. But here’s the deal—if the pain is new, severe, or comes with things like chest pain, swelling, or numbness, please stop immediately and seek medical help. Better safe than sorry! Let me know if you’d like some guided videos for these exercises or if you want me to check with your care team for more personalized recommendations. You’ve got this—take it slow and steady!"},
-        
-        {"keywords": ["drowsiness", "side effect"], "response": "Hey! I’m sorry you’re feeling drowsy—that can be tough. Yes, amlodipine can sometimes cause drowsiness because it helps to relax and widen your blood vessels, lowering your blood pressure. That drop in blood pressure can sometimes make you feel a bit sleepy or sluggish. But here’s the thing—if the drowsiness came on suddenly, is severe, or if you’re feeling chest pain, shortness of breath, fainting, or confusion, you need to get medical help immediately. Please don’t wait—call for emergency help right away. If it’s just a mild drowsy feeling, here are a few things you could try: Keep yourself hydrated—sometimes a glass of water helps perk you up! Try a light walk or some gentle stretching if you feel up to it; it can boost your energy. Skip heavy meals or alcohol right now, as they can sometimes make drowsiness worse. But, if this drowsiness is messing with your daily routine, don’t just push through it. Let your doctor know. Sometimes, they might adjust your dose or try a different medication, which may not make you as sleepy. If you’re still feeling concerned, we can raise this issue to your doctor and get their advice. Just let me know—I’m here to help!"},
-        
-        {"keywords": ["contact number", "postpone appointment"], "response": "Of course! You can reschedule your appointment at Ng Teng Fong Hospital by calling 6908 2222. They’ll be happy to help you find a new time that works for you. If you would like to top up your medication in the meantime until your next appointment date, I can assist you with placing an order. Let me know how I can help!"},
-        
-        {"keywords": [], "response": "I'm not sure about that. Can you ask me something else?"} # Default response
-    ]
-    
-    # Find a matching response based on keywords
-    for item in response_mapping:
-        if any(keyword in user_message for keyword in item["keywords"]):
-            return item["response"]
-    
-    return "I'm not sure about that. Can you ask me something else?"
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 @csrf_exempt
-def chatbot_response(request):
+def chatbot_query(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        user_message = data.get("message", "")
-        response = get_chatbot_response(user_message)
-        return JsonResponse({"response": response})
+        query = data.get("message", "")
+
+        # Load FAISS DB and search for relevant chunks
+        db = FAISS.load_local("happ/embeddings/faiss_index", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+        docs = db.similarity_search(query, k=3)
+
+        # ✅ Fallback if nothing relevant is found
+        if not docs:
+            return JsonResponse({"answer": "I couldn’t find anything relevant in my knowledge base. Please try rephrasing your question."})
+        
+        context = "\n\n".join([doc.page_content for doc in docs])
+
+        # Send query and context to OpenAI
+        # ✅ NEW API format
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful medical assistant. Only answer based on the provided context."
+                },
+                {
+                    "role": "user",
+                    "content": f"Context:\n{context}\n\nQuestion: {query}"
+                }
+            ]
+        )
+
+        
+
+        # ✅ Extract answer from response
+        answer = response.choices[0].message.content
+
+         # ✅ Log query and response
+        print(f"[CHATBOT QUERY] User: {query}")
+        print(f"[CHATBOT RESPONSE] Bot: {answer}")
+
+        return JsonResponse({"answer": answer})

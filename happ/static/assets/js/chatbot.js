@@ -67,7 +67,7 @@ function removeTypingIndicator() {
 
 // Fetch chatbot response with delay
 function getChatbotResponse(message) {
-    fetch("/chatbot-response/", {
+    fetch("/chatbot_query/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
@@ -75,7 +75,7 @@ function getChatbotResponse(message) {
     .then(response => response.json())
     .then(data => {
         removeTypingIndicator(); // Remove "..." before showing bot's response
-        displayMessage(data.response, "bot");
+        displayMessage(data.answer, "bot");
     })
     .catch(error => {
         console.error("Error:", error);

@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 import os
 
 from . import views
-from .views import chatbot_response
+from .views import chatbot_query
 
 urlpatterns = [
     # ✅ Authentication Routes
@@ -51,7 +51,7 @@ urlpatterns = [
 
     # ✅ Firebase Push Notification + Chatbot
     path('save-token/', views.save_token, name='save-token'),
-    path("chatbot-response/", chatbot_response, name="chatbot_response"),
+    path('chatbot_query/', chatbot_query, name='chatbot_query'),
 
     # ✅ Serve firebase-messaging-sw.js
     re_path(r'^firebase-messaging-sw.js$', serve, {
