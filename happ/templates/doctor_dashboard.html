@@ -1,71 +1,54 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>My Patients</title>
 
     <!-- 👇 Drop this in your static folder as shown below -->
     <link rel="stylesheet" href="{% static 'assets/css/doctor_dashboard.css' %}">
 </head>
+
 <body>
     <div class="container">
         <!-- ─── Greeting ─────────────────────────────────────────── -->
-        <div class="header">
-            <h1>👋 Hi {{ doctor.full_name|default:user.username }}!</h1>
+        <a href="{% url 'doctor_settings' %}" style="text-decoration: none; color: inherit;">
+            <div class="header" style="cursor: pointer;">
+                <h1>👋 Hi {{ doctor.doctor_full_name|default:user.username }}!</h1>
 
-            {% if doctor.photo %}
+                {% if doctor.photo %}
                 <img src="{{ doctor.photo.url }}" alt="Doctor Avatar">
-            {% else %}
+                {% else %}
                 <img src="{% static 'assets/images/profile.png' %}" alt="Doctor Avatar">
-            {% endif %}
-        </div>
+                {% endif %}
+            </div>
+        </a>
 
         <!-- ─── Patients list ────────────────────────────────────── -->
         <h2 class="section-title">My Patients</h2>
 
         <div class="family-section">
             {% if patients %}
-                {% for pat in patients %}
-                    <a href="{% url 'home' pat.user.id %}" class="family-card">
-                        <h3>{{ pat.user.username|title }}</h3>
+            {% for pat in patients %}
+            <a href="{% url 'view_patient_reports' pat.id %}" class="family-card">
+                <h3>{{ pat.user.username|title }}</h3>
+                {% if pat.photo %}
+                <img src="{{ pat.photo.url }}" alt="{{ pat.user.username }}">
+                {% else %}
+                <img src="{% static 'assets/images/default-avatar.png' %}" alt="{{ pat.user.username }}">
+                {% endif %}
+            </a>
 
-                        {% if pat.photo %}
-                            <img src="{{ pat.photo.url }}" alt="{{ pat.user.username }}">
-                        {% else %}
-                            <img src="{% static 'assets/images/default-avatar.png' %}"
-                                 alt="{{ pat.user.username }}">
-                        {% endif %}
-                    </a>
-                {% endfor %}
+            {% endfor %}
             {% else %}
-                <p class="empty-text">No patients assigned yet.</p>
+            <p class="empty-text">No patients assigned yet.</p>
             {% endif %}
         </div>
     </div>
 
-    <!-- ─── Bottom nav (same icons, doctor routes) ──────────────── -->
-    <div class="bottom-nav">
-  <a href="{% url 'doctor_dashboard' %}">
-    <img src="{% static 'assets/images/navbar/modules-active.png' %}" alt="Dashboard">
-  </a>
-  <a href="{% url 'appointments' %}">
-   <img src="{% static 'assets/images/appointment.png' %}" alt="Appointments">
 
-  </a>
-  <a href="{% url 'notifications' %}">
-    <img src="{% static 'assets/images/navbar/bell.png' %}" alt="Notifications">
-  </a>
-  <a href="{% url 'settings' %}">
-    <img src="{% static 'assets/images/navbar/settings.png' %}" alt="Settings">
-  </a>
-</div>
-
-
-    <!-- Chatbot & scripts (re-use existing) -->
-    <script src="{% static 'assets/js/scripts.js' %}"></script>
-    {% include 'chatbot.html' %}
 </body>
+
 </html>

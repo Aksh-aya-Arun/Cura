@@ -25,44 +25,44 @@
       {% csrf_token %}
 
       <!-- Doctor ID -->
-      <input type="text" name="doctor_id" placeholder="Doctor ID (unique)" class="input-field" required value="{{ form.doctor_id.value|default_if_none:'' }}">
-      {% if form.doctor_id.errors %}
-        <div class="error">{{ form.doctor_id.errors.0 }}</div>
+      <input type="text" name="doctor_doctor_id" placeholder="Doctor ID (unique)" class="input-field" required value="{{ form.doctor_doctor_id.value|default_if_none:'' }}">
+      {% if form.doctor_doctor_id.errors %}
+        <div class="error">{{ form.doctor_doctor_id.errors.0 }}</div>
       {% endif %}
 
       <!-- Full Name -->
-      <input type="text" name="full_name" placeholder="Full Name" class="input-field" required value="{{ form.full_name.value|default_if_none:'' }}">
-      {% if form.full_name.errors %}
-        <div class="error">{{ form.full_name.errors.0 }}</div>
+      <input type="text" name="doctor_full_name" placeholder="Full Name" class="input-field" required value="{{ form.doctor_full_name.value|default_if_none:'' }}">
+      {% if form.doctor_full_name.errors %}
+        <div class="error">{{ form.doctor_full_name.errors.0 }}</div>
       {% endif %}
 
       <!-- Email -->
-      <input type="email" name="email" placeholder="Email" class="input-field" required value="{{ form.email.value|default_if_none:'' }}">
-      {% if form.email.errors %}
-        <div class="error">{{ form.email.errors.0 }}</div>
+      <input type="email" name="doctor_email" placeholder="Email" class="input-field" required value="{{ form.doctor_email.value|default_if_none:'' }}">
+      {% if form.doctor_email.errors %}
+        <div class="error">{{ form.doctor_email.errors.0 }}</div>
       {% endif %}
 
       <!-- Speciality -->
-      <input type="text" name="speciality" placeholder="Speciality" class="input-field" required value="{{ form.speciality.value|default_if_none:'' }}">
-      {% if form.speciality.errors %}
-        <div class="error">{{ form.speciality.errors.0 }}</div>
+      <input type="text" name="doctor_speciality" placeholder="Speciality" class="input-field" required value="{{ form.doctor_speciality.value|default_if_none:'' }}">
+      {% if form.doctor_speciality.errors %}
+        <div class="error">{{ form.doctor_speciality.errors.0 }}</div>
       {% endif %}
 
       <!-- Contact Number -->
-      <input type="text" name="contact_number" placeholder="Contact No." class="input-field" required value="{{ form.contact_number.value|default_if_none:'' }}">
-      {% if form.contact_number.errors %}
-        <div class="error">{{ form.contact_number.errors.0 }}</div>
+      <input type="text" name="doctor_phone" placeholder="Contact No." class="input-field" required value="{{ form.doctor_phone.value|default_if_none:'' }}">
+      {% if form.doctor_phone.errors %}
+        <div class="error">{{ form.doctor_phone.errors.0 }}</div>
       {% endif %}
 
       <!-- Password -->
       <div class="password-container">
-        <input type="password" name="password" id="doctorPassword" placeholder="Password" class="input-field" required autocomplete="current-password">
+        <input type="password" name="doctor_password" id="doctorPassword" placeholder="Password" class="input-field" required autocomplete="current-password">
         <span class="toggle-password" onclick="togglePassword('doctorPassword')">
           <img id="eyeIcon" src="{% static 'assets/images/eye.png' %}" alt="toggle-password" style="width: 20px; cursor: pointer;">
         </span>
       </div>
-      {% if form.password.errors %}
-        <div class="error">{{ form.password.errors.0 }}</div>
+      {% if form.doctor_password.errors %}
+        <div class="error">{{ form.doctor_password.errors.0 }}</div>
       {% endif %}
 
       <button type="submit" class="signup-button">Sign Up</button>

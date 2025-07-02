@@ -1,26 +1,24 @@
 # ─── views.py  (imports) ──────────────────────────────────────────────────────
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 
 from django.core.mail import EmailMessage, send_mail
-from django.http import JsonResponse
+
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction  
 
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import OpenAIEmbeddings
-from dotenv import load_dotenv
 
-from openai import OpenAI
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import os, json
 from datetime import datetime
+
 
 from .models import (
     Profile, UserProfile, FamilyMember,
@@ -36,38 +34,35 @@ def signup_choice(request):
     return render(request, "signup_choice.html")
 # ─── Doctor sign-up (public — NO login_required) ─────────────────────────────
 def doctor_signup(request):
-    """
-    Create a new Doctor account + linked Django User in one atomic step.
-    Username == doctor_id so the doctor logs in with that ID.
-    """
     if request.method == "POST":
         form = DoctorSignupForm(request.POST)
         if form.is_valid():
             with transaction.atomic():
-                # split out the extra password field
-                pwd        = form.cleaned_data.pop('password')
-                doctor_id  = form.cleaned_data["doctor_id"]
-                email      = form.cleaned_data["email"]
+                # Split out the extra password field
+                pwd        = form.cleaned_data.pop('doctor_password')
+                doctor_id  = form.cleaned_data["doctor_doctor_id"]
+                email      = form.cleaned_data["doctor_email"]
 
-                # 1) create auth user
+                # Create auth user
                 user = User.objects.create_user(
                     username=doctor_id,
                     email=email,
                     password=pwd
                 )
 
-                # 2) create Doctor profile
-                doctor           = form.save(commit=False)
-                doctor.user      = user
-                doctor.full_name = form.cleaned_data["full_name"]
+                # Create Doctor profile
+                doctor = form.save(commit=False)
+                doctor.doctor_user = user
                 doctor.save()
+                # After doctor.save()
+            assign_patients_by_doctor_id(doctor)
+
 
             messages.success(request, "Doctor account created — please sign in.")
             return redirect("doctor_login")
     else:
         form = DoctorSignupForm()
 
-    # ✅ FIXED TEMPLATE PATH
     return render(request, "doctor_signup.html", {"form": form})
 
 # ... (all your other imports)
@@ -75,31 +70,29 @@ from django.contrib.auth.decorators import login_required
 
 # ─── Doctor login ────────────────────────────────────────────────
 def doctor_login(request):
-    """
-    Doctor sign-in via doctor_id + password.
-    """
     if request.method == "POST":
-        doctor_id = request.POST.get("doctor_id")
+        doctor_id = request.POST.get("doctor_id")  # keep this plain because your HTML uses 'doctor_id'
         password  = request.POST.get("password")
 
         user = authenticate(request, username=doctor_id, password=password)
-
-        # user must exist *and* be linked to a Doctor profile
-        if user and Doctor.objects.filter(user=user).exists():
+        if user and Doctor.objects.filter(doctor_user=user).exists():
             login(request, user)
-            return redirect("doctor_dashboard")          # <── straight to dashboard
+            return redirect("doctor_dashboard")
         messages.error(request, "Invalid Doctor ID or password.")
 
     return render(request, "doctor_login.html")
 
 
+
 # ─── Doctor dashboard ────────────────────────────────────────────
-@login_required(login_url="doctor_login")                # <── explicit!
+@login_required(login_url="doctor_login")
 def doctor_dashboard(request):
-    doctor   = Doctor.objects.filter(user=request.user).first()
+    doctor = Doctor.objects.filter(doctor_user=request.user).first()
     patients = UserProfile.objects.filter(assigned_doctor=doctor) if doctor else []
-    return render(request, "doctor_dashboard.html",
-                  {"doctor": doctor, "patients": patients})
+    return render(request, "doctor_dashboard.html", {
+        "doctor": doctor,
+        "patients": patients
+    })
 
 
 # Temporary storage for user tokens (use a database in production)
@@ -118,6 +111,21 @@ def journal_view(request):
         swelling = request.POST.get('swelling', 'No swelling 🦶')
         emergency_symptoms = request.POST.get('emergency', 'No')
         extra_note = request.POST.get('extraNote', 'No additional notes provided.')
+        JournalEntry.objects.create(
+            user=user,
+            pain_level=pain_level,
+            energy_level=energy_level,
+            breath=shortness_of_breath,
+            chest_pain=chest_pain,
+            physical_activity=physical_activity,
+            stress_level=stress_level,
+            swelling=swelling,
+            emergency=emergency_symptoms,
+            extra_note=extra_note
+        )
+
+
+        
 
         # Define normalized mappings for a fixed range (0-10)
         normalized_mapping = {
@@ -316,6 +324,7 @@ def signup_view(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
+        unique_id = request.POST.get('unique_id')
 
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Username already taken. Choose another one.')
@@ -325,16 +334,29 @@ def signup_view(request):
             messages.error(request, 'Email already registered.')
             return redirect('signup')
 
+        # 1. Create the user
         user = User.objects.create_user(username=username, email=email, password=password)
-        
-        # ✅ Remove this: Profile.objects.create(user=user, is_new=True)
-        # The Profile is automatically created by signals.py
 
+        # 2. Create the UserProfile with default values for required fields
+        profile = UserProfile.objects.create(
+            user=user,
+            name=username,  # placeholder name
+            age=0,  # default age
+            gender='Not specified',
+            dob='2000-01-01',
+            phone='0000000000',
+            email=email,
+            location='Not specified',
+            emergency_contact='0000000000',
+            unique_id=unique_id
+        )
+
+        # 3. Link doctor by unique ID
+        assign_doctor_by_unique_id(profile)  
         messages.success(request, 'Account created successfully! Please log in.')
         return redirect('login')
 
     return render(request, 'signup.html')
-
 
 # ✅ User Login View
 def login_view(request):
@@ -366,6 +388,33 @@ def login_view(request):
 def user_logout(request):
     logout(request)
     return redirect('login')  # Redirect to login after logout
+
+
+def assign_doctor_by_unique_id(profile):
+    print(f"🔍 Trying to assign doctor for patient with unique ID: {profile.unique_id}")
+    try:
+        doctor = Doctor.objects.get(doctor_doctor_id=profile.unique_id)
+        profile.assigned_doctor = doctor
+        profile.save()
+        print(f"✅ Assigned Doctor: {doctor.doctor_full_name} to {profile.user.username}")
+    except Doctor.DoesNotExist:
+        print(f"❌ No doctor found for ID: {profile.unique_id}")
+
+def assign_patients_by_doctor_id(doctor):
+    print(f"🔍 Assigning patients to doctor: {doctor.doctor_full_name} (ID: {doctor.doctor_doctor_id})")
+    matches = UserProfile.objects.filter(
+        unique_id=doctor.doctor_doctor_id,
+        assigned_doctor__isnull=True
+    )
+    if matches.exists():
+        for profile in matches:
+            profile.assigned_doctor = doctor
+            profile.save()
+            print(f"✅ Assigned patient: {profile.user.username} to Dr. {doctor.doctor_full_name}")
+    else:
+        print("❌ No unassigned patients matched with this doctor.")
+
+
 
 # ✅ Protected Home View (Only Logged-in Users Can Access)
 
@@ -408,10 +457,6 @@ def journal(request):
 @login_required(login_url='login')
 def activity(request):
     return render(request, 'activity.html')
-
-@login_required(login_url='login')
-def settingscroll(request):
-    return render(request, 'settingscroll.html')
 
 @login_required(login_url='login')
 def leaderboard(request):
@@ -466,6 +511,10 @@ def medications(request):
 def tour(request):
     return render(request, 'tour.html')
 
+@login_required(login_url='login')
+def doc_settings(request):
+    return render(request, 'doctor_settings.html')
+
 
 # ✅ 🔥 Save Firebase Device Token (For Push Notifications)
 @csrf_exempt
@@ -483,50 +532,141 @@ def save_token(request):
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+        
 
-load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+from django.views.decorators.csrf import csrf_exempt
+import json
 
+def get_chatbot_response(user_message):
+    user_message = user_message.lower()
+    
+    # Keyword-based response mapping
+    response_mapping = [
+        {"keywords": ["hokkaido baked cheese tart"], "response": "Hokkaido Baked Cheese Tarts are delicious, but they’re high in saturated fats and sugars, which can raise cholesterol and affect heart health. Since managing fat and sugar intake is crucial for your condition, it’s best to limit these treats. If you’re looking for a tasty alternative, how about trying the Soy Pudding from Mr. Bean? It’s smooth, naturally sweetened, and lower in saturated fats—making it a more heart-friendly choice. Let me know if you’d like more snack recommendations around Singapore!"},
+        
+        {"keywords": ["feeling good"], "response": "Good to hear!"},
+        
+        {"keywords": ["not good"], "response": "Any discomfort you feel?"},
+        
+        {"keywords": ["knee pain", "exercise alternative"], "response": "Hey! Sorry to hear you’re dealing with limb pain. That sounds uncomfortable. Since you’ve got coronary artery disease, it’s super important to choose exercises that are gentle on your body while still keeping your heart healthy. If your doctor, Dr. Lim, previously recommended the seated leg raise (10 reps, 3 sets), you could try swapping it for ankle pumps (15 reps per leg). They’re great for improving circulation without putting too much strain on your limbs. Another simple option is the heel-to-toe walk—do this for about 5 minutes. It helps with balance and leg strength but is still low-impact. If you’re feeling up to it, gentle stretches like calf stretches against the wall (hold for 20 seconds, repeat 3 times per leg) can also relieve tension. But here’s the deal—if the pain is new, severe, or comes with things like chest pain, swelling, or numbness, please stop immediately and seek medical help. Better safe than sorry! Let me know if you’d like some guided videos for these exercises or if you want me to check with your care team for more personalized recommendations. You’ve got this—take it slow and steady!"},
+        
+        {"keywords": ["drowsiness", "side effect"], "response": "Hey! I’m sorry you’re feeling drowsy—that can be tough. Yes, amlodipine can sometimes cause drowsiness because it helps to relax and widen your blood vessels, lowering your blood pressure. That drop in blood pressure can sometimes make you feel a bit sleepy or sluggish. But here’s the thing—if the drowsiness came on suddenly, is severe, or if you’re feeling chest pain, shortness of breath, fainting, or confusion, you need to get medical help immediately. Please don’t wait—call for emergency help right away. If it’s just a mild drowsy feeling, here are a few things you could try: Keep yourself hydrated—sometimes a glass of water helps perk you up! Try a light walk or some gentle stretching if you feel up to it; it can boost your energy. Skip heavy meals or alcohol right now, as they can sometimes make drowsiness worse. But, if this drowsiness is messing with your daily routine, don’t just push through it. Let your doctor know. Sometimes, they might adjust your dose or try a different medication, which may not make you as sleepy. If you’re still feeling concerned, we can raise this issue to your doctor and get their advice. Just let me know—I’m here to help!"},
+        
+        {"keywords": ["contact number", "postpone appointment"], "response": "Of course! You can reschedule your appointment at Ng Teng Fong Hospital by calling 6908 2222. They’ll be happy to help you find a new time that works for you. If you would like to top up your medication in the meantime until your next appointment date, I can assist you with placing an order. Let me know how I can help!"},
+        
+        {"keywords": [], "response": "I'm not sure about that. Can you ask me something else?"} # Default response
+    ]
+    
+    # Find a matching response based on keywords
+    for item in response_mapping:
+        if any(keyword in user_message for keyword in item["keywords"]):
+            return item["response"]
+    
+    return "I'm not sure about that. Can you ask me something else?"
 
 @csrf_exempt
-def chatbot_query(request):
+def chatbot_response(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        query = data.get("message", "")
+        user_message = data.get("message", "")
+        response = get_chatbot_response(user_message)
+        return JsonResponse({"response": response})
+    
+@login_required
+def view_patient_reports(request, patient_id):
+    doctor = Doctor.objects.filter(doctor_user=request.user).first()
+    patient_profile = UserProfile.objects.filter(id=patient_id, assigned_doctor=doctor).first()
 
-        # Load FAISS DB and search for relevant chunks
-        db = FAISS.load_local("happ/embeddings/faiss_index", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-        docs = db.similarity_search(query, k=3)
+    if not patient_profile:
+        messages.error(request, "Unauthorized access.")
+        return redirect("doctor_dashboard")
 
-        # ✅ Fallback if nothing relevant is found
-        if not docs:
-            return JsonResponse({"answer": "I couldn’t find anything relevant in my knowledge base. Please try rephrasing your question."})
-        
-        context = "\n\n".join([doc.page_content for doc in docs])
+    journal_entries = JournalEntry.objects.filter(user=patient_profile.user).order_by('-timestamp')
+    return render(request, 'patient_journals.html', {
+        'patient': patient_profile,
+        'entries': journal_entries
+    })
 
-        # Send query and context to OpenAI
-        # ✅ NEW API format
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful medical assistant. Only answer based on the provided context."
-                },
-                {
-                    "role": "user",
-                    "content": f"Context:\n{context}\n\nQuestion: {query}"
-                }
-            ]
-        )
+@login_required
+def view_single_entry(request, entry_id):
+    entry = JournalEntry.objects.filter(id=entry_id).first()
+    if not entry:
+        messages.error(request, "Entry not found.")
+        return redirect('doctor_dashboard')
 
-        
+    # Mapping logic
+    normalized_mapping = {
+        'pain_level': {
+            "No Pain 😃": 0, "Very Mild Pain 🙂": 1, "Mild Pain 🙂": 2, "Discomfort 😐": 3,
+            "Moderate Pain 😣": 4, "Uncomfortable 😖": 5, "Severe Pain 😢": 6,
+            "Very Severe Pain 😭": 7, "Intense Pain 💀": 8, "Extreme Pain 💀💀": 9,
+            "Worst Possible Pain 💀💀💀": 10
+        },
+        'energy_level': {
+            "Excellent – no fatigue 😃": 0, "Good – mild fatigue 🙂": 3,
+            "Fair – moderate fatigue 😐": 6, "Poor – severe fatigue 😞": 10,
+        },
+        'breath': {
+            "No, not at all": 0, "Yes, during mild activity": 3,
+            "Yes, during strenuous activity": 6, "Yes, even at rest": 10
+        },
+        'chest_pain': {
+            "No Pain 😃": 0, "Mild discomfort 🙂": 3, "Moderate pain 😣": 6,
+            "Severe pain 😖": 10
+        },
+        'physical_activity': {
+            "More than usual": 0, "As much as usual": 3,
+            "Less than usual": 6, "None": 10
+        },
+        'stress_level': {
+            "No stress 😃": 0, "Mild stress 🙂": 3, "Moderate stress 😐": 6,
+            "High stress 😖": 10
+        },
+        'swelling': {
+            "No swelling 🦶": 0, "Mild swelling 🦶": 3,
+            "Moderate swelling 🦶": 6, "Severe swelling 🦶": 10
+        },
+        'emergency': {
+            "No": 0, "Mild, manageable at home": 3,
+            "Moderate, resolved with rest": 6, "Severe, required attention": 10
+        }
+    }
 
-        # ✅ Extract answer from response
-        answer = response.choices[0].message.content
+    # Normalize entry values
+    values = [
+        normalized_mapping['pain_level'].get(entry.pain_level, 0),
+        normalized_mapping['energy_level'].get(entry.energy_level, 0),
+        normalized_mapping['breath'].get(entry.breath, 0),
+        normalized_mapping['chest_pain'].get(entry.chest_pain, 0),
+        normalized_mapping['physical_activity'].get(entry.physical_activity, 0),
+        normalized_mapping['stress_level'].get(entry.stress_level, 0),
+        normalized_mapping['swelling'].get(entry.swelling, 0),
+        normalized_mapping['emergency'].get(entry.emergency, 0)
+    ]
 
-         # ✅ Log query and response
-        print(f"[CHATBOT QUERY] User: {query}")
-        print(f"[CHATBOT RESPONSE] Bot: {answer}")
+    labels = [
+        "Pain", "Energy", "Breath", "Chest",
+        "Activity", "Stress", "Swelling", "Emergency"
+    ]
 
-        return JsonResponse({"answer": answer})
+    # Ensure folder exists
+    graph_dir = os.path.join('static', 'journal_graphs')
+    os.makedirs(graph_dir, exist_ok=True)
+
+    graph_path = os.path.join(graph_dir, f'entry_{entry.id}.png')
+
+    # Generate and save the graph
+    plt.figure(figsize=(10, 6))
+    plt.barh(labels, values, color='#37B897', edgecolor='black')
+    plt.xlim(0, 10)
+    plt.xlabel("Severity")
+    plt.title(f"Journal Entry #{entry.id} Health Graph")
+    plt.grid(axis='x', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.savefig(graph_path)
+    plt.close()
+
+    return render(request, 'single_journal_entry.html', {
+        'entry': entry,
+        'graph_path': f'/static/journal_graphs/entry_{entry.id}.png'
+    })

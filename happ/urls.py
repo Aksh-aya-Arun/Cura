@@ -5,9 +5,10 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 import os
+from django.shortcuts import render
 
 from . import views
-from .views import chatbot_query
+from .views import chatbot_response
 
 urlpatterns = [
     # ✅ Authentication Routes
@@ -25,7 +26,6 @@ urlpatterns = [
     path('journal/', views.journal_view, name='journal'),
     path('journal/confirmation/', lambda request: render(request, 'journal_confirmation.html'), name='journal_confirmation'),
     path('activity/', views.activity, name='activity'),
-    path('settingscroll/', views.settingscroll, name='settingscroll'),
     path('addprofile/', views.add_profile, name='addprofile'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
     path('noactivity/', views.noactivity, name='noactivity'),
@@ -48,10 +48,15 @@ urlpatterns = [
     path('signup/doctor/', views.doctor_signup, name='doctor_signup'),
     path('login/doctor/', views.doctor_login, name='doctor_login'),  # <-- MAKE SURE THIS IS DEFINED!
     path('doctor/dashboard/', views.doctor_dashboard, name='doctor_dashboard'),
+    path('doctor_settings/', views.doc_settings, name='doctor_settings'),
+    path('doctor/patient/<int:patient_id>/journals/', views.view_patient_reports, name='view_patient_reports'),
+    path('doctor/journal/<int:entry_id>/', views.view_single_entry, name='view_single_entry'),
+
+
 
     # ✅ Firebase Push Notification + Chatbot
     path('save-token/', views.save_token, name='save-token'),
-    path('chatbot_query/', chatbot_query, name='chatbot_query'),
+    path("chatbot-response/", chatbot_response, name="chatbot_response"),
 
     # ✅ Serve firebase-messaging-sw.js
     re_path(r'^firebase-messaging-sw.js$', serve, {

@@ -3,7 +3,7 @@ from .models import UserProfile, FamilyMember, Doctor
 from django.contrib.auth.models import User
 
 class DoctorSignupForm(forms.ModelForm):
-    password = forms.CharField(
+    doctor_password = forms.CharField(
         widget=forms.PasswordInput,
         min_length=6,
         label="Password"
@@ -11,12 +11,19 @@ class DoctorSignupForm(forms.ModelForm):
 
     class Meta:
         model = Doctor
-        fields = ['doctor_id', 'full_name', 'email', 'speciality', 'phone',]
+        fields = [
+            'doctor_doctor_id',
+            'doctor_full_name',
+            'doctor_email',
+            'doctor_speciality',
+            'doctor_phone',
+        ]
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'age', 'gender', 'dob', 'phone', 'email', 'location', 'emergency_contact', 'photo']
+        fields = ['name', 'age', 'gender', 'dob', 'phone', 'email', 'location', 'emergency_contact', 'photo', 'unique_id']
 
 class FamilyMemberForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ patient.user.username }}'s Journal Reports</title>
+    <link rel="stylesheet" href="{% static 'assets/css/patient_journals.css' %}">
+</head>
+<body>
+<div class="container">
+    <a href="{% url 'doctor_dashboard' %}" class="back-button">← Back</a>
+    <h1>{{ patient.name }}'s Journal Entries</h1>
+
+    <div class="journal-container">
+  {% for entry in entries %}
+    <div class="journal-card">
+        <h3>{{ entry.timestamp|date:"M d, Y – H:i" }}</h3>
+        <p><strong>Pain:</strong> {{ entry.pain_level }}</p>
+        <p><strong>Energy:</strong> {{ entry.energy_level }}</p>
+        <p><strong>Stress:</strong> {{ entry.stress_level }}</p>
+        <a href="{% url 'view_single_entry' entry.id %}" class="view-btn">View Full Entry →</a>
+    </div>
+  {% empty %}
+    <p>No journal entries available for this patient.</p>
+  {% endfor %}
+</div>
+
+
+</div>
+</body>
+</html>

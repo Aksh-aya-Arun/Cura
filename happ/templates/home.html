@@ -1,20 +1,27 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>{{ user_profile.name }}'s Home</title>
     <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <h1>👋 Hi {{ user_profile.name }}!</h1>
-            {% if user_profile.photo %}
-                <img src="{{ user_profile.photo.url }}" alt="Profile Picture">
+            {% if user_profile.assigned_doctor %}
+<p class="doctor-info">Your doctor: Dr. {{ user_profile.assigned_doctor.doctor_doctor_id }}</p>
             {% else %}
-                <img src="{% static 'assets/images/profile.png' %}" alt="Profile Picture">
+            <p class="doctor-info">No doctor assigned yet.</p>
+            {% endif %}
+            {% if user_profile.photo %}
+            <img src="{{ user_profile.photo.url }}" alt="Profile Picture">
+            {% else %}
+            <img src="{% static 'assets/images/profile.png' %}" alt="Profile Picture">
             {% endif %}
         </div>
 
@@ -60,4 +67,5 @@
     <script src="{% static 'assets/js/scripts.js' %}"></script>
     {% include 'chatbot.html' %}
 </body>
+
 </html>
